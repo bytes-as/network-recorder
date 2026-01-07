@@ -16,77 +16,77 @@
       width: 420px;
       height: 600px;
       font-family: 'Inter', 'SF Pro Display', 'SF Pro Text', -apple-system, sans-serif;
-      background: rgba(28, 28, 30, 1);
+      background: #0F0F10;
       color: #FFFFFF;
       overflow: hidden;
     }
     
-    /* Header */
+    /* Consolidated Header */
     .header {
-      padding: 20px 24px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      background: rgba(28, 28, 30, 0.98);
-      backdrop-filter: blur(40px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #1C1C1E;
+      border-bottom: 1px solid #2C2C2E;
     }
     
-    .header-top {
+    .search-bar {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      margin-bottom: 12px;
-    }
-    
-    .title-section {
-      display: flex;
-      align-items: center;
+      padding: 10px 16px;
       gap: 10px;
     }
     
-    .status-indicator {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #3A3A3C;
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    .search-icon {
+      width: 16px;
+      height: 16px;
+      fill: #8E8E93;
+      flex-shrink: 0;
     }
     
-    .status-indicator.recording {
-      background: #FF3B30;
-      box-shadow: 0 0 10px rgba(255, 59, 48, 0.6);
-      animation: pulse 2s ease-in-out infinite;
-    }
-    
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.2); opacity: 0.8; }
-    }
-    
-    .title {
-      font-size: 20px;
-      font-weight: 700;
+    .search-input {
+      flex: 1;
+      background: transparent;
+      border: none;
       color: #FFFFFF;
+      font-size: 14px;
+      font-family: inherit;
+      outline: none;
+    }
+    
+    .search-input::placeholder {
+      color: #6B6B6B;
+    }
+    
+    .search-stats {
+      font-size: 12px;
+      color: #6B6B6B;
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
     }
     
     .header-actions {
       display: flex;
+      align-items: center;
       gap: 8px;
     }
     
     .icon-btn {
-      width: 32px;
-      height: 32px;
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.08);
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      background: transparent;
       border: none;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.2s ease;
+      transition: background 0.2s ease;
+      position: relative;
     }
     
     .icon-btn:hover:not(:disabled) {
-      background: rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.08);
     }
     
     .icon-btn:disabled {
@@ -95,301 +95,297 @@
     }
     
     .icon-btn svg {
-      width: 18px;
-      height: 18px;
-      fill: #FFFFFF;
+      width: 16px;
+      height: 16px;
+      fill: #8E8E93;
     }
     
-    .icon-btn.clear svg {
+    .icon-btn.record svg {
       fill: #FF3B30;
     }
     
-    .stats {
-      display: flex;
-      gap: 16px;
-      font-size: 13px;
+    .icon-btn.record.recording::before {
+      content: '';
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #FF3B30;
+      animation: pulse 2s ease-in-out infinite;
     }
     
-    .stat-item {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      color: #8E8E93;
+    @keyframes pulse {
+      0%, 100% { 
+        transform: scale(1); 
+        opacity: 1; 
+        box-shadow: 0 0 0 0 rgba(255, 59, 48, 0.7);
+      }
+      50% { 
+        transform: scale(1.1); 
+        opacity: 0.9;
+        box-shadow: 0 0 0 8px rgba(255, 59, 48, 0);
+      }
     }
     
-    .stat-value {
-      font-weight: 600;
-      color: #FFFFFF;
-    }
-    
-    /* Control Bar */
-    .control-bar {
-      padding: 16px 24px;
-      background: rgba(20, 20, 22, 0.8);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    
-    .record-btn {
-      padding: 10px 20px;
-      border-radius: 10px;
-      border: none;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      transition: all 0.2s ease;
-      flex-shrink: 0;
-    }
-    
-    .record-btn.start {
-      background: rgba(52, 199, 89, 0.15);
-      color: #34C759;
-      border: 1px solid rgba(52, 199, 89, 0.3);
-    }
-    
-    .record-btn.start:hover {
-      background: rgba(52, 199, 89, 0.25);
-    }
-    
-    .record-btn.stop {
-      background: rgba(255, 59, 48, 0.15);
-      color: #FF3B30;
-      border: 1px solid rgba(255, 59, 48, 0.3);
-    }
-    
-    .record-btn.stop:hover {
-      background: rgba(255, 59, 48, 0.25);
-    }
-    
-    .record-btn svg {
-      width: 14px;
-      height: 14px;
-      fill: currentColor;
-    }
-    
-    .search-box {
-      flex: 1;
-      padding: 10px 14px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 10px;
-      color: #FFFFFF;
-      font-size: 13px;
-      font-family: inherit;
-      outline: none;
-      transition: all 0.2s ease;
-    }
-    
-    .search-box:focus {
-      background: rgba(255, 255, 255, 0.08);
-      border-color: rgba(10, 132, 255, 0.5);
-    }
-    
-    .search-box::placeholder {
-      color: #6B6B6B;
-    }
-    
-    /* Content Area */
+    /* Content Area - Edge to Edge List */
     .content {
-      height: calc(600px - 130px);
+      height: calc(600px - 51px);
       overflow-y: auto;
-      padding: 12px;
+      overflow-x: hidden;
     }
     
     .content::-webkit-scrollbar {
-      width: 6px;
+      width: 4px;
     }
     
     .content::-webkit-scrollbar-track {
-      background: rgba(255, 255, 255, 0.03);
+      background: transparent;
     }
     
     .content::-webkit-scrollbar-thumb {
-      background: rgba(255, 255, 255, 0.15);
-      border-radius: 3px;
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 2px;
     }
     
-    .content::-webkit-scrollbar-thumb:hover {
-      background: rgba(255, 255, 255, 0.25);
-    }
-    
-    /* Network Call Card */
-    .call-card {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 12px;
-      padding: 12px 14px;
-      margin-bottom: 8px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-    
-    .call-card:hover {
-      background: rgba(255, 255, 255, 0.08);
-      border-color: rgba(255, 255, 255, 0.15);
-    }
-    
-    .call-header {
+    /* Network Call Item - Flat List Design */
+    .call-item {
       display: flex;
       align-items: center;
-      gap: 10px;
-      margin-bottom: 6px;
+      padding: 12px 16px;
+      border-bottom: 1px solid #2C2C2E;
+      transition: background 0.15s ease;
+      cursor: pointer;
+      position: relative;
     }
     
-    .method-badge {
-      padding: 3px 8px;
-      border-radius: 6px;
-      font-size: 11px;
+    .call-item:hover {
+      background: rgba(255, 255, 255, 0.03);
+    }
+    
+    .call-item:active {
+      background: rgba(255, 255, 255, 0.05);
+    }
+    
+    /* Left: Status & Method */
+    .call-status {
+      width: 60px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2px;
+    }
+    
+    .call-method {
+      font-size: 13px;
       font-weight: 600;
-      text-transform: uppercase;
+      font-variant-numeric: tabular-nums;
     }
     
-    .method-badge.GET {
-      background: rgba(52, 199, 89, 0.15);
+    .call-method.success {
       color: #34C759;
     }
     
-    .method-badge.POST {
-      background: rgba(10, 132, 255, 0.15);
-      color: #0A84FF;
-    }
-    
-    .method-badge.PUT {
-      background: rgba(255, 159, 10, 0.15);
+    .call-method.redirect {
       color: #FF9F0A;
     }
     
-    .method-badge.DELETE {
-      background: rgba(255, 59, 48, 0.15);
+    .call-method.error {
       color: #FF3B30;
     }
     
-    .status-badge {
-      padding: 3px 8px;
-      border-radius: 6px;
-      font-size: 11px;
-      font-weight: 600;
-    }
-    
-    .status-badge.success {
-      background: rgba(52, 199, 89, 0.15);
-      color: #34C759;
-    }
-    
-    .status-badge.error {
-      background: rgba(255, 59, 48, 0.15);
-      color: #FF3B30;
-    }
-    
-    .call-url {
-      font-size: 13px;
-      color: #FFFFFF;
-      word-break: break-all;
-      line-height: 1.4;
-      font-family: 'Monaco', 'Menlo', 'Consolas', monospace;
-    }
-    
-    .call-meta {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-top: 8px;
-      font-size: 11px;
+    .call-method.pending {
       color: #8E8E93;
     }
     
-    .call-meta-item {
+    .call-status-code {
+      font-size: 11px;
+      color: #6B6B6B;
+      font-variant-numeric: tabular-nums;
+    }
+    
+    /* Center: Endpoint & Resource Type */
+    .call-main {
+      flex: 1;
+      min-width: 0;
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 8px;
+    }
+    
+    .call-type-icon {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      opacity: 0.6;
+    }
+    
+    .call-info {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    
+    .call-endpoint {
+      font-size: 13px;
+      font-weight: 500;
+      color: #FFFFFF;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    .call-domain {
+      font-size: 11px;
+      color: #6B6B6B;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    /* Right: Timing & Size */
+    .call-meta {
+      width: 70px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 2px;
+      font-variant-numeric: tabular-nums;
+    }
+    
+    .call-duration {
+      font-size: 12px;
+      color: #8E8E93;
+      font-family: 'SF Mono', 'Monaco', 'Menlo', monospace;
+    }
+    
+    .call-time {
+      font-size: 10px;
+      color: #6B6B6B;
+      font-family: 'SF Mono', 'Monaco', 'Menlo', monospace;
+    }
+    
+    /* Waterfall Bar */
+    .call-waterfall {
+      position: absolute;
+      bottom: 0;
+      left: 76px;
+      height: 2px;
+      background: linear-gradient(90deg, rgba(10, 132, 255, 0.4), rgba(10, 132, 255, 0.8));
+      transition: width 0.3s ease;
+    }
+    
+    .call-item:hover .call-waterfall {
+      background: linear-gradient(90deg, rgba(10, 132, 255, 0.6), rgba(10, 132, 255, 1));
     }
     
     /* Empty State */
     .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      padding: 60px 40px;
       text-align: center;
-      padding: 80px 40px;
-      color: #6B6B6B;
     }
     
     .empty-state svg {
-      width: 64px;
-      height: 64px;
+      width: 48px;
+      height: 48px;
       fill: #3A3A3C;
       margin-bottom: 16px;
+      opacity: 0.5;
     }
     
     .empty-state-title {
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 600;
       color: #8E8E93;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
     
     .empty-state-text {
       font-size: 13px;
+      color: #6B6B6B;
       line-height: 1.5;
+    }
+    
+    /* Resource Type Icons */
+    .icon-json {
+      color: #34C759;
+    }
+    
+    .icon-html {
+      color: #FF9F0A;
+    }
+    
+    .icon-image {
+      color: #0A84FF;
+    }
+    
+    .icon-css {
+      color: #BF5AF2;
+    }
+    
+    .icon-js {
+      color: #FFD60A;
+    }
+    
+    .icon-font {
+      color: #FF375F;
+    }
+    
+    .icon-other {
+      color: #8E8E93;
     }
   </style>
 </head>
 <body>
+  <!-- Consolidated Header -->
   <div class="header">
-    <div class="header-top">
-      <div class="title-section">
-        <div class="status-indicator" id="statusIndicator"></div>
-        <h1 class="title">Network Recorder</h1>
-      </div>
+    <div class="search-bar">
+      <svg class="search-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+      </svg>
+      <input 
+        type="text" 
+        class="search-input" 
+        id="searchInput" 
+        placeholder="Search network calls..."
+      />
+      <span class="search-stats" id="searchStats">0 calls</span>
       <div class="header-actions">
-        <button class="icon-btn" id="clearBtn" title="Clear all calls" disabled>
+        <button class="icon-btn record" id="recordBtn" title="Toggle recording">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="8"/>
+          </svg>
+        </button>
+        <button class="icon-btn" id="clearBtn" title="Clear all" disabled>
           <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
           </svg>
         </button>
-        <button class="icon-btn" id="downloadBtn" title="Download data" disabled>
+        <button class="icon-btn" id="downloadBtn" title="Download" disabled>
           <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
           </svg>
         </button>
       </div>
     </div>
-    <div class="stats">
-      <div class="stat-item">
-        <span>Total:</span>
-        <span class="stat-value" id="totalCount">0</span>
-      </div>
-      <div class="stat-item">
-        <span>Filtered:</span>
-        <span class="stat-value" id="filteredCount">0</span>
-      </div>
-    </div>
   </div>
   
-  <div class="control-bar">
-    <button class="record-btn start" id="recordBtn">
-      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="12" cy="12" r="8"/>
-      </svg>
-      <span id="recordBtnText">Start Recording</span>
-    </button>
-    <input 
-      type="text" 
-      class="search-box" 
-      id="searchBox" 
-      placeholder="Search URLs..."
-    />
-  </div>
-  
+  <!-- Content List -->
   <div class="content" id="content">
     <div class="empty-state">
       <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
       </svg>
-      <div class="empty-state-title">No network calls recorded</div>
-      <div class="empty-state-text">Click "Start Recording" to begin capturing network requests</div>
+      <div class="empty-state-title">No network calls</div>
+      <div class="empty-state-text">Start recording to capture requests</div>
     </div>
   </div>
   

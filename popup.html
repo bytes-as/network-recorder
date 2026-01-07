@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      width: 300px;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+    }
+    h2 {
+      margin: 0 0 15px 0;
+      font-size: 18px;
+    }
+    .status {
+      padding: 10px;
+      border-radius: 5px;
+      margin-bottom: 15px;
+      text-align: center;
+      font-weight: bold;
+    }
+    .recording {
+      background-color: #ffebee;
+      color: #c62828;
+    }
+    .stopped {
+      background-color: #e8f5e9;
+      color: #2e7d32;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      font-size: 14px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+    #startBtn {
+      background-color: #4CAF50;
+      color: white;
+    }
+    #stopBtn {
+      background-color: #f44336;
+      color: white;
+    }
+    #downloadBtn {
+      background-color: #2196F3;
+      color: white;
+    }
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    .info {
+      font-size: 12px;
+      color: #666;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Network Call Recorder</h2>
+  
+  <div id="status" class="status stopped">Stopped</div>
+  
+  <button id="startBtn">Start Recording</button>
+  <button id="stopBtn" disabled>Stop Recording</button>
+  <button id="downloadBtn" disabled>Download Recorded Data</button>
+  
+  <div class="info">
+    <div id="callCount">Calls recorded: 0</div>
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>

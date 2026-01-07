@@ -2,6 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     * {
       margin: 0;
@@ -9,231 +10,386 @@
       box-sizing: border-box;
     }
     
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
     
     body {
-      width: 320px;
-      height: 64px;
-      padding: 0;
+      width: 420px;
+      height: 600px;
       font-family: 'Inter', 'SF Pro Display', 'SF Pro Text', -apple-system, sans-serif;
-      background: transparent;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      background: rgba(28, 28, 30, 1);
+      color: #FFFFFF;
+      overflow: hidden;
     }
     
-    /* The Dynamic Island Container */
-    .island {
-      width: 320px;
-      height: 64px;
-      border-radius: 9999px;
-      background: rgba(0, 0, 0, 0.95);
-      backdrop-filter: blur(25px);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      box-shadow: 0px 10px 30px -10px rgba(0, 0, 0, 0.8);
+    /* Header */
+    .header {
+      padding: 20px 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(28, 28, 30, 0.98);
+      backdrop-filter: blur(40px);
+    }
+    
+    .header-top {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 20px;
-      transition: box-shadow 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      margin-bottom: 12px;
     }
     
-    .island.recording {
-      box-shadow: 0px 10px 30px -10px rgba(0, 0, 0, 0.8), 0px 0px 25px rgba(255, 59, 48, 0.15);
-    }
-    
-    /* Brand Section (Left) */
-    .brand {
+    .title-section {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
     }
     
-    .status-dot {
-      width: 6px;
-      height: 6px;
+    .status-indicator {
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
       background: #3A3A3C;
       transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
     
-    .status-dot.recording {
+    .status-indicator.recording {
       background: #FF3B30;
-      box-shadow: 0 0 8px rgba(255, 59, 48, 0.6);
+      box-shadow: 0 0 10px rgba(255, 59, 48, 0.6);
+      animation: pulse 2s ease-in-out infinite;
     }
     
-    .brand-text {
-      font-size: 10px;
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.2); opacity: 0.8; }
+    }
+    
+    .title {
+      font-size: 20px;
       font-weight: 700;
-      letter-spacing: 1.5px;
+      color: #FFFFFF;
+    }
+    
+    .header-actions {
+      display: flex;
+      gap: 8px;
+    }
+    
+    .icon-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.08);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+    
+    .icon-btn:hover:not(:disabled) {
+      background: rgba(255, 255, 255, 0.12);
+    }
+    
+    .icon-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+    
+    .icon-btn svg {
+      width: 18px;
+      height: 18px;
+      fill: #FFFFFF;
+    }
+    
+    .icon-btn.clear svg {
+      fill: #FF3B30;
+    }
+    
+    .stats {
+      display: flex;
+      gap: 16px;
+      font-size: 13px;
+    }
+    
+    .stat-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #8E8E93;
+    }
+    
+    .stat-value {
+      font-weight: 600;
+      color: #FFFFFF;
+    }
+    
+    /* Control Bar */
+    .control-bar {
+      padding: 16px 24px;
+      background: rgba(20, 20, 22, 0.8);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .record-btn {
+      padding: 10px 20px;
+      border-radius: 10px;
+      border: none;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+    
+    .record-btn.start {
+      background: rgba(52, 199, 89, 0.15);
+      color: #34C759;
+      border: 1px solid rgba(52, 199, 89, 0.3);
+    }
+    
+    .record-btn.start:hover {
+      background: rgba(52, 199, 89, 0.25);
+    }
+    
+    .record-btn.stop {
+      background: rgba(255, 59, 48, 0.15);
+      color: #FF3B30;
+      border: 1px solid rgba(255, 59, 48, 0.3);
+    }
+    
+    .record-btn.stop:hover {
+      background: rgba(255, 59, 48, 0.25);
+    }
+    
+    .record-btn svg {
+      width: 14px;
+      height: 14px;
+      fill: currentColor;
+    }
+    
+    .search-box {
+      flex: 1;
+      padding: 10px 14px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      color: #FFFFFF;
+      font-size: 13px;
+      font-family: inherit;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+    
+    .search-box:focus {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(10, 132, 255, 0.5);
+    }
+    
+    .search-box::placeholder {
       color: #6B6B6B;
+    }
+    
+    /* Content Area */
+    .content {
+      height: calc(600px - 130px);
+      overflow-y: auto;
+      padding: 12px;
+    }
+    
+    .content::-webkit-scrollbar {
+      width: 6px;
+    }
+    
+    .content::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.03);
+    }
+    
+    .content::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 3px;
+    }
+    
+    .content::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+    
+    /* Network Call Card */
+    .call-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin-bottom: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    
+    .call-card:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+    
+    .call-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+    
+    .method-badge {
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
       text-transform: uppercase;
     }
     
-    /* Counter (Center) */
-    .counter {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 28px;
-      font-weight: 500;
+    .method-badge.GET {
+      background: rgba(52, 199, 89, 0.15);
+      color: #34C759;
+    }
+    
+    .method-badge.POST {
+      background: rgba(10, 132, 255, 0.15);
+      color: #0A84FF;
+    }
+    
+    .method-badge.PUT {
+      background: rgba(255, 159, 10, 0.15);
+      color: #FF9F0A;
+    }
+    
+    .method-badge.DELETE {
+      background: rgba(255, 59, 48, 0.15);
+      color: #FF3B30;
+    }
+    
+    .status-badge {
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    
+    .status-badge.success {
+      background: rgba(52, 199, 89, 0.15);
+      color: #34C759;
+    }
+    
+    .status-badge.error {
+      background: rgba(255, 59, 48, 0.15);
+      color: #FF3B30;
+    }
+    
+    .call-url {
+      font-size: 13px;
       color: #FFFFFF;
-      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      user-select: none;
+      word-break: break-all;
+      line-height: 1.4;
+      font-family: 'Monaco', 'Menlo', 'Consolas', monospace;
     }
     
-    .counter.recording {
-      text-shadow: 0 0 10px rgba(255, 59, 48, 0.6);
-    }
-    
-    /* Controls (Right) */
-    .controls {
+    .call-meta {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 12px;
+      margin-top: 8px;
+      font-size: 11px;
+      color: #8E8E93;
     }
     
-    /* Mic Button / Waveform */
-    .mic-button {
-      width: 20px;
-      height: 20px;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 0;
+    .call-meta-item {
       display: flex;
       align-items: center;
-      justify-content: center;
-      position: relative;
-      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      gap: 4px;
     }
     
-    .mic-icon {
-      width: 20px;
-      height: 20px;
-      fill: #FFFFFF;
-      opacity: 1;
-      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 80px 40px;
+      color: #6B6B6B;
     }
     
-    .mic-button.recording .mic-icon {
-      opacity: 0;
-      transform: scale(0);
+    .empty-state svg {
+      width: 64px;
+      height: 64px;
+      fill: #3A3A3C;
+      margin-bottom: 16px;
     }
     
-    /* Waveform Animation */
-    .waveform {
-      display: none;
-      align-items: center;
-      justify-content: center;
-      gap: 2px;
-      position: absolute;
-      opacity: 0;
-      transform: scale(0);
-      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    .empty-state-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #8E8E93;
+      margin-bottom: 8px;
     }
     
-    .mic-button.recording .waveform {
-      display: flex;
-      opacity: 1;
-      transform: scale(1);
-    }
-    
-    .wave-bar {
-      width: 3px;
-      border-radius: 2px;
-      background: linear-gradient(180deg, #FF3B30 0%, #FF6B30 100%);
-      animation: wave-pulse 1s ease-in-out infinite;
-    }
-    
-    .wave-bar:nth-child(1) {
-      height: 8px;
-      animation-delay: 0s;
-    }
-    
-    .wave-bar:nth-child(2) {
-      height: 14px;
-      animation-delay: 0.15s;
-    }
-    
-    .wave-bar:nth-child(3) {
-      height: 10px;
-      animation-delay: 0.3s;
-    }
-    
-    .wave-bar:nth-child(4) {
-      height: 16px;
-      animation-delay: 0.45s;
-    }
-    
-    @keyframes wave-pulse {
-      0%, 100% {
-        transform: scaleY(0.5);
-      }
-      50% {
-        transform: scaleY(1);
-      }
-    }
-    
-    /* Download Button */
-    .download-button {
-      width: 20px;
-      height: 20px;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.2s ease;
-    }
-    
-    .download-icon {
-      width: 20px;
-      height: 20px;
-      fill: #8E8E93;
-      transition: all 0.2s ease;
-    }
-    
-    .download-button:hover:not(:disabled) .download-icon {
-      fill: #FFFFFF;
-    }
-    
-    .download-button:disabled {
-      opacity: 0.3;
-      cursor: not-allowed;
+    .empty-state-text {
+      font-size: 13px;
+      line-height: 1.5;
     }
   </style>
 </head>
 <body>
-  <div class="island" id="island">
-    <div class="brand">
-      <div class="status-dot" id="statusDot"></div>
-      <div class="brand-text">NET.REC</div>
+  <div class="header">
+    <div class="header-top">
+      <div class="title-section">
+        <div class="status-indicator" id="statusIndicator"></div>
+        <h1 class="title">Network Recorder</h1>
+      </div>
+      <div class="header-actions">
+        <button class="icon-btn" id="clearBtn" title="Clear all calls" disabled>
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+          </svg>
+        </button>
+        <button class="icon-btn" id="downloadBtn" title="Download data" disabled>
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+          </svg>
+        </button>
+      </div>
     </div>
-    
-    <div class="counter" id="counter">0</div>
-    
-    <div class="controls">
-      <button class="mic-button" id="micButton">
-        <svg class="mic-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
-          <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
-        </svg>
-        <div class="waveform">
-          <div class="wave-bar"></div>
-          <div class="wave-bar"></div>
-          <div class="wave-bar"></div>
-          <div class="wave-bar"></div>
-        </div>
-      </button>
-      
-      <button class="download-button" id="downloadBtn" disabled title="Export data">
-        <svg class="download-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
-        </svg>
-      </button>
+    <div class="stats">
+      <div class="stat-item">
+        <span>Total:</span>
+        <span class="stat-value" id="totalCount">0</span>
+      </div>
+      <div class="stat-item">
+        <span>Filtered:</span>
+        <span class="stat-value" id="filteredCount">0</span>
+      </div>
+    </div>
+  </div>
+  
+  <div class="control-bar">
+    <button class="record-btn start" id="recordBtn">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12" cy="12" r="8"/>
+      </svg>
+      <span id="recordBtnText">Start Recording</span>
+    </button>
+    <input 
+      type="text" 
+      class="search-box" 
+      id="searchBox" 
+      placeholder="Search URLs..."
+    />
+  </div>
+  
+  <div class="content" id="content">
+    <div class="empty-state">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+      </svg>
+      <div class="empty-state-title">No network calls recorded</div>
+      <div class="empty-state-text">Click "Start Recording" to begin capturing network requests</div>
     </div>
   </div>
   

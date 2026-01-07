@@ -14,10 +14,32 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
 async function addNetworkCall(callData) {
   try {
-    const result = await chrome.storage.local.get(['isRecording', 'networkCalls']);
+    const result = await chrome.storage.local.get(['isRecording', 'networkCalls', 'urlFilters']);
     if (!result.isRecording) return;
     
     const networkCalls = result.networkCalls || [];
+    const urlFilters = result.urlFilters || [];
+    
+    // Apply URL filters if any exist
+    if (urlFilters.length > 0) {
+      const url = callData.url || '';
+      let shouldInclude = false;
+      
+      for (const filterPattern of urlFilters) {
+        try {
+          const regex = new RegExp(filterPattern);
+          if (regex.test(url)) {
+            shouldInclude = true;
+            break;
+          }
+        } catch (e) {
+          console.warn('Invalid regex pattern:', filterPattern, e);
+        }
+      }
+      
+      // If filters exist but none match, skip this call
+      if (!shouldInclude) return;
+    }
     
     // Create a clean, serializable object
     const cleanCallData = {

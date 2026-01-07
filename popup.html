@@ -3,74 +3,238 @@
 <head>
   <meta charset="UTF-8">
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap');
+    
     body {
-      width: 300px;
-      padding: 20px;
-      font-family: Arial, sans-serif;
+      width: 320px;
+      height: 64px;
+      padding: 0;
+      font-family: 'Inter', 'SF Pro Display', 'SF Pro Text', -apple-system, sans-serif;
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    h2 {
-      margin: 0 0 15px 0;
-      font-size: 18px;
+    
+    /* The Dynamic Island Container */
+    .island {
+      width: 320px;
+      height: 64px;
+      border-radius: 9999px;
+      background: rgba(0, 0, 0, 0.95);
+      backdrop-filter: blur(25px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0px 10px 30px -10px rgba(0, 0, 0, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      transition: box-shadow 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
-    .status {
-      padding: 10px;
-      border-radius: 5px;
-      margin-bottom: 15px;
-      text-align: center;
-      font-weight: bold;
+    
+    .island.recording {
+      box-shadow: 0px 10px 30px -10px rgba(0, 0, 0, 0.8), 0px 0px 25px rgba(255, 59, 48, 0.15);
     }
-    .recording {
-      background-color: #ffebee;
-      color: #c62828;
+    
+    /* Brand Section (Left) */
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
-    .stopped {
-      background-color: #e8f5e9;
-      color: #2e7d32;
+    
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #3A3A3C;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
-    button {
-      width: 100%;
-      padding: 12px;
-      font-size: 14px;
+    
+    .status-dot.recording {
+      background: #FF3B30;
+      box-shadow: 0 0 8px rgba(255, 59, 48, 0.6);
+    }
+    
+    .brand-text {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      color: #6B6B6B;
+      text-transform: uppercase;
+    }
+    
+    /* Counter (Center) */
+    .counter {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 28px;
+      font-weight: 500;
+      color: #FFFFFF;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      user-select: none;
+    }
+    
+    .counter.recording {
+      text-shadow: 0 0 10px rgba(255, 59, 48, 0.6);
+    }
+    
+    /* Controls (Right) */
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    
+    /* Mic Button / Waveform */
+    .mic-button {
+      width: 20px;
+      height: 20px;
+      background: none;
       border: none;
-      border-radius: 5px;
       cursor: pointer;
-      margin-bottom: 10px;
-      font-weight: bold;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
-    #startBtn {
-      background-color: #4CAF50;
-      color: white;
+    
+    .mic-icon {
+      width: 20px;
+      height: 20px;
+      fill: #FFFFFF;
+      opacity: 1;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
-    #stopBtn {
-      background-color: #f44336;
-      color: white;
+    
+    .mic-button.recording .mic-icon {
+      opacity: 0;
+      transform: scale(0);
     }
-    #downloadBtn {
-      background-color: #2196F3;
-      color: white;
+    
+    /* Waveform Animation */
+    .waveform {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      position: absolute;
+      opacity: 0;
+      transform: scale(0);
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
-    button:disabled {
-      opacity: 0.5;
+    
+    .mic-button.recording .waveform {
+      display: flex;
+      opacity: 1;
+      transform: scale(1);
+    }
+    
+    .wave-bar {
+      width: 3px;
+      border-radius: 2px;
+      background: linear-gradient(180deg, #FF3B30 0%, #FF6B30 100%);
+      animation: wave-pulse 1s ease-in-out infinite;
+    }
+    
+    .wave-bar:nth-child(1) {
+      height: 8px;
+      animation-delay: 0s;
+    }
+    
+    .wave-bar:nth-child(2) {
+      height: 14px;
+      animation-delay: 0.15s;
+    }
+    
+    .wave-bar:nth-child(3) {
+      height: 10px;
+      animation-delay: 0.3s;
+    }
+    
+    .wave-bar:nth-child(4) {
+      height: 16px;
+      animation-delay: 0.45s;
+    }
+    
+    @keyframes wave-pulse {
+      0%, 100% {
+        transform: scaleY(0.5);
+      }
+      50% {
+        transform: scaleY(1);
+      }
+    }
+    
+    /* Download Button */
+    .download-button {
+      width: 20px;
+      height: 20px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+    
+    .download-icon {
+      width: 20px;
+      height: 20px;
+      fill: #8E8E93;
+      transition: all 0.2s ease;
+    }
+    
+    .download-button:hover:not(:disabled) .download-icon {
+      fill: #FFFFFF;
+    }
+    
+    .download-button:disabled {
+      opacity: 0.3;
       cursor: not-allowed;
-    }
-    .info {
-      font-size: 12px;
-      color: #666;
-      margin-top: 10px;
     }
   </style>
 </head>
 <body>
-  <h2>Network Call Recorder</h2>
-  
-  <div id="status" class="status stopped">Stopped</div>
-  
-  <button id="startBtn">Start Recording</button>
-  <button id="stopBtn" disabled>Stop Recording</button>
-  <button id="downloadBtn" disabled>Download Recorded Data</button>
-  
-  <div class="info">
-    <div id="callCount">Calls recorded: 0</div>
+  <div class="island" id="island">
+    <div class="brand">
+      <div class="status-dot" id="statusDot"></div>
+      <div class="brand-text">NET.REC</div>
+    </div>
+    
+    <div class="counter" id="counter">0</div>
+    
+    <div class="controls">
+      <button class="mic-button" id="micButton">
+        <svg class="mic-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
+          <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+        </svg>
+        <div class="waveform">
+          <div class="wave-bar"></div>
+          <div class="wave-bar"></div>
+          <div class="wave-bar"></div>
+          <div class="wave-bar"></div>
+        </div>
+      </button>
+      
+      <button class="download-button" id="downloadBtn" disabled title="Export data">
+        <svg class="download-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+        </svg>
+      </button>
+    </div>
   </div>
   
   <script src="popup.js"></script>
